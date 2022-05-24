@@ -56,7 +56,7 @@ if ($_POST['deco'] == "Déconnexion"){
 
 
 <?php
-if ($_POST['submit'] == 'nouveau') {1.01
+if ($_POST['submit'] == 'nouveau') {
     include 'requetes.php';
     $name = $_POST['nom'];
     $pdo = new PDO('sqlite:bdd.sqlite');
