@@ -17,9 +17,9 @@ session_start();
 <body>
 
     <?php
-    include 'requetes.php';
     echo '<h3>'."Vous êtes connecté en tant que " . $_SESSION['username'].'</h3>';
     ?>
+    <br><br>
 <div class="container">
   <div class="Left">
     <script type="text/javascript">
@@ -56,7 +56,7 @@ if ($_POST['deco'] == "Déconnexion"){
 
 
 <?php
-if ($_POST['submit'] == 'nouveau') {1.01
+if ($_POST['submit'] == 'nouveau') {
     include 'requetes.php';
     $name = $_POST['nom'];
     $pdo = new PDO('sqlite:bdd.sqlite');
