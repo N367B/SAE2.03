@@ -59,16 +59,20 @@ if ($_POST['submit']=='Connexion'){
 
 
 if ($_POST['submit']=='Inscription'){
-  include 'requetes.php';
   $name = $_POST['username'];
-  $pdo = new PDO('sqlite:bdd.sqlite');
-  $query = $requetes[1];
-  $stmt = $pdo->prepare($query);
-  $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
-  $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-  $stmt->bindValue(3, date('Y-m-d H:i:s'), PDO::PARAM_STR);
-  $stmt->execute();
-  $pdo = null;
-  echo '<h3>Utilisateur '. $_POST['username'] . ' créé</h3>';
+  if ($name != '' && isset($name)) {
+      include 'requetes.php';
+      $pdo = new PDO('sqlite:bdd.sqlite');
+      $query = $requetes[1];
+      $stmt = $pdo->prepare($query);
+      $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
+      $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
+      $stmt->bindValue(3, date('Y-m-d H:i:s'), PDO::PARAM_STR);
+      $stmt->execute();
+      $pdo = null;
+      echo '<h3>Utilisateur '. $_POST['username'] . ' créé</h3>';
+  } else {
+    echo "<h3>Mauvais identifiant</h3>";
+  }
 }
     ?>
