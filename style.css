@@ -1,0 +1,79 @@
+body {
+    background-color: lightblue;
+    color: grey;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  font-size: 20px;
+  width: 100%;
+  background-color: #555;
+  color: aliceblue;
+}
+
+a {
+  color: aliceblue
+}
+h3 {
+  background-color: black;
+  color: aliceblue;
+}
+
+.sujets {
+  background-color: #555;
+}
+
+.TOPT {
+  background-color: darkgrey;
+
+}
+
+.container {  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px 10px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "tl tm tr"
+    "ml mm mr"
+    "bl bm br";
+}
+
+.tl { grid-area: tl; }
+
+.tm { grid-area: tm; }
+
+.tr { grid-area: tr; }
+
+.ml { grid-area: ml; }
+
+.mm { grid-area: mm;
+    padding: 10px;
+    background-color: grey;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.mr { grid-area: mr; }
+
+.bl { grid-area: bl; }
+
+.bm { grid-area: bm; }
+
+.br { grid-area: br; }
+
+.button {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.button:hover {
+    cursor: pointer;
+  background-color: #555;
+  color: black;
+}
