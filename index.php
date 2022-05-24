@@ -50,6 +50,9 @@ if ($_POST['submit']=='Connexion'){
         $_SESSION['username'] = $_POST['username'];
         header('Location: place.php');
     }
+    else {
+      echo "<h2>Identifiant ou mot de passe incorrecte<h2>";
+    }
 }
 
 
@@ -62,9 +65,9 @@ if ($_POST['submit']=='Inscription'){
   $stmt = $pdo->prepare($query);
   $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
   $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-  #$stmt->execute();
+  $stmt->bindValue(3, date('Y-m-d H:i:s'), PDO::PARAM_STR);
+  $stmt->execute();
   $pdo = null;
   echo '<h3>Utilisateur '. $_POST['username'] . ' créé</h3>';
 }
-
     ?>
