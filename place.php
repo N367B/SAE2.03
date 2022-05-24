@@ -54,7 +54,7 @@ if ($_POST['deco'] == "Déconnexion"){
 if ($_POST['submit'] == 'nouveau') {
     include 'requetes.php';
     $name = $_POST['nom'];
-    $pdo = new PDO('sqlite:forum.db');
+    $pdo = new PDO('sqlite:bdd.sqlite');
     $query = $requetes[4];
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(1, $_POST['sujet'], PDO::PARAM_STR);
