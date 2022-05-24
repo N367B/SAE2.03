@@ -36,7 +36,7 @@
 if ($_POST['submit']=='Connexion'){
     include 'requetes.php';
     $name = $_POST['username'];
-    $pdo = new PDO('sqlite:forum.db');
+    $pdo = new PDO('sqlite:bdd.sqlite');
     $query = $requetes[0];
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
@@ -48,21 +48,22 @@ if ($_POST['submit']=='Connexion'){
         session_start();
         $_SESSION["newsession"]=$result[0]['id_membre'];
         $_SESSION['username'] = $_POST['username'];
-        header('Location: sujets.php');
+        header('Location: place.php');
     }
 }
+
+
 
 if ($_POST['submit']=='Inscription'){
   include 'requetes.php';
   $name = $_POST['username'];
-  $pdo = new PDO('sqlite:forum.db');
+  $pdo = new PDO('sqlite:bdd.sqlite.db');
   $query = $requetes[1];
   $stmt = $pdo->prepare($query);
   $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
   $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
   #$stmt->execute();
   $pdo = null;
-  var_dump($_POST['username']);
   echo '<h3>Utilisateur '. $_POST['username'] . ' créé</h3>';
 }
 
