@@ -24,9 +24,9 @@ session_start();
   <div class="Left">
     <script type="text/javascript">
       var colors = ["white", "black", 'red', 'blue', 'green'];
-      document.write('<svg viewBox="0 0 20 6" xmlns="http://www.w3.org/2000/svg">');
-      for (var i = 0; i < 6; i++) {
-        for (var j = 0; j < 6; j++) {
+      document.write('<svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" class="SVGgrid">');
+      for (var i = 0; i < 12; i++) {
+        for (var j = 0; j < 12; j++) {
           document.write(`<rect x="${i*1.01}" y="${j*1.01}" width="1" height="1" fill="${colors[0]}"/>`);
         }
       }
@@ -55,9 +55,8 @@ if ($_POST['deco'] == "Déconnexion"){
 </body>
 
 
-
 <?php
-if ($_POST['submit'] == 'nouveau') {
+if ($_POST['submit'] == 'nouveau') {1.01
     include 'requetes.php';
     $name = $_POST['nom'];
     $pdo = new PDO('sqlite:bdd.sqlite');

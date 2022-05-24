@@ -49,3 +49,10 @@ h3 {
 .Left { grid-area: Left; }
 
 .Right { grid-area: Right; }
+
+
+
+.SVGgrid {
+  width: auto;
+  height: auto;
+}
