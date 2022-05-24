@@ -60,7 +60,8 @@ if ($_POST['submit']=='Connexion'){
 
 if ($_POST['submit']=='Inscription'){
   $name = $_POST['username'];
-  if ($name != '' && isset($name)) {
+  if (ctype($name) == False) {
+    #if ()
       include 'requetes.php';
       $pdo = new PDO('sqlite:bdd.sqlite');
       $query = $requetes[1];
@@ -75,4 +76,9 @@ if ($_POST['submit']=='Inscription'){
     echo "<h3>Mauvais identifiant</h3>";
   }
 }
+
+
+
+
+
     ?>
