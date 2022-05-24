@@ -2,7 +2,7 @@
  <html>
 
  <head>
-     <link rel="stylesheet" type="text/css" href="style.css">
+     <link rel="stylesheet" type="text/css" href="styleIndex.css">
 
  </head>
 
@@ -29,6 +29,7 @@
  </body>
 
  </html>
+
  <?php
 
 /*----------------------------*/
@@ -56,7 +57,7 @@ if ($_POST['submit']=='Connexion'){
 }
 
 
-f
+
 if ($_POST['submit']=='Inscription'){
   include 'requetes.php';
   $name = $_POST['username'];

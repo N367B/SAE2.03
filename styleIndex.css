@@ -19,14 +19,7 @@ h3 {
   color: aliceblue;
 }
 
-.sujets {
-  background-color: #555;
-}
 
-.TOPT {
-  background-color: darkgrey;
-
-}
 
 .container {  display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
@@ -41,6 +34,7 @@ h3 {
 
 .tl { grid-area: tl; }
 
+.tm { grid-area: tm; }
 .tm { grid-area: tm; }
 
 .tr { grid-area: tr; }
@@ -61,6 +55,7 @@ h3 {
 .bm { grid-area: bm; }
 
 .br { grid-area: br; }
+
 
 .button {
   background-color: black;

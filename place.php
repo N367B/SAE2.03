@@ -10,7 +10,7 @@ session_start();
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="stylePlace.css">
 
 </head>
 
@@ -20,7 +20,8 @@ session_start();
     include 'requetes.php';
     echo '<h3>'."Vous êtes connecté en tant que " . $_SESSION['username'].'</h3>';
     ?>
-
+<div class="container">
+  <div class="Left">
     <script type="text/javascript">
       var colors = ["white", "black", 'red', 'blue', 'green'];
       document.write('<svg viewBox="0 0 20 6" xmlns="http://www.w3.org/2000/svg">');
@@ -32,7 +33,7 @@ session_start();
 
       document.write('</svg>');
     </script>
-
+</div>
 
 
 <br><br>
@@ -41,7 +42,7 @@ session_start();
 </form>
 
 
-
+<div class="Right">
 <?php
 if ($_POST['deco'] == "Déconnexion"){
     #unset($_SESSION);
@@ -49,6 +50,8 @@ if ($_POST['deco'] == "Déconnexion"){
     header('Location: index.php');
 }
 ?>
+</div>
+</div>
 </body>
 
 
