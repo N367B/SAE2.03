@@ -17,9 +17,9 @@ session_start();
 <body>
 
     <?php
-    include 'requetes.php';
     echo '<h3>'."Vous êtes connecté en tant que " . $_SESSION['username'].'</h3>';
     ?>
+    <br><br>
 <div class="container">
   <div class="Left">
     <script type="text/javascript">
