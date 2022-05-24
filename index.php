@@ -51,16 +51,16 @@ if ($_POST['submit']=='Connexion'){
         header('Location: place.php');
     }
     else {
-      echo "<h2>Identifiant ou mot de passe incorrecte<h2>";
+      echo "<h3>Identifiant ou mot de passe incorrecte<h3>";
     }
 }
 
 
-
+f
 if ($_POST['submit']=='Inscription'){
   include 'requetes.php';
   $name = $_POST['username'];
-  $pdo = new PDO('sqlite:bdd.sqlite.db');
+  $pdo = new PDO('sqlite:bdd.sqlite');
   $query = $requetes[1];
   $stmt = $pdo->prepare($query);
   $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);

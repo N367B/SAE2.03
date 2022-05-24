@@ -16,29 +16,32 @@ session_start();
 
 <body>
 
-  <script type="text/javascript">
-    var colors = ["white", "black", 'red', 'blue', 'green'];
-    document.write('<svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">');
-    for (var i = 0; i < 6; i++) {
-      for (var j = 0; j < 6; j++) {
-        document.write(`<rect x="${i*1.01}" y="${j*1.01}" width="1" height="1" fill="${colors[0]}"/>`);
-      }
-    }
-
-    document.write('</svg>');
-  </script>
-
-
-
-
     <?php
     include 'requetes.php';
     echo '<h3>'."Vous êtes connecté en tant que " . $_SESSION['username'].'</h3>';
     ?>
-<br>
+
+    <script type="text/javascript">
+      var colors = ["white", "black", 'red', 'blue', 'green'];
+      document.write('<svg viewBox="0 0 20 6" xmlns="http://www.w3.org/2000/svg">');
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          document.write(`<rect x="${i*1.01}" y="${j*1.01}" width="1" height="1" fill="${colors[0]}"/>`);
+        }
+      }
+
+      document.write('</svg>');
+    </script>
+
+
+
+<br><br>
     <form method='post'>
     <input type="submit" name="deco" value="Déconnexion" class="button">
 </form>
+
+
+
 <?php
 if ($_POST['deco'] == "Déconnexion"){
     #unset($_SESSION);
