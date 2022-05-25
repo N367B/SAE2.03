@@ -59,7 +59,7 @@ if ($_POST['submit'] == 'Connexion') {
 
 if ($_POST['submit'] == 'Inscription') {
   $name = $_POST['username'];
-  if (ctype($name) == False) {
+  if ($name == '') {
     #if ()
     include 'requetes.php';
     $pdo = new PDO('sqlite:bdd.sqlite');
@@ -75,9 +75,6 @@ if ($_POST['submit'] == 'Inscription') {
     echo "<h3>Mauvais identifiant</h3>";
   }
 }
-
-
-function verifyIfSpaces
 
 
 ?>
