@@ -6,9 +6,5 @@ $requetes = [
   "INSERT INTO Utilisateur(nom_utilisateur, mot_de_passe, heure_dernier_pixel) VALUES (?,?,?)"
 ];
 
-function test()
-{
-  return "test";
-};
 ?>
 </html>

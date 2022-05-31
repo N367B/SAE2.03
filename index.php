@@ -55,11 +55,9 @@ if ($_POST['submit'] == 'Connexion') {
   }
 }
 
-
-
 if ($_POST['submit'] == 'Inscription') {
   $name = $_POST['username'];
-  if ($name == '') {
+  if ($name !== '') {
     #if ()
     include 'requetes.php';
     $pdo = new PDO('sqlite:bdd.sqlite');
