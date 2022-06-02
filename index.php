@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     $pdo = null;
     if (isset($result[0][1])) {
       session_start();
-      $_SESSION["newsession"] = $result[0]['id_membre'];
+      $_SESSION["session"] = $result[0]['identifiant_utilisateur'];
       $_SESSION['username'] = $_POST['username'];
       header('Location: place.php');
     } else {
