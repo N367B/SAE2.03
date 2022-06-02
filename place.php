@@ -18,6 +18,18 @@ if (count($_SESSION) == 0) {
 
   <?php
   echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>';
+  include 'requetes.php';
+  $pdo = new PDO('sqlite:bdd.sqlite');
+  $query = $requetes[3];
+  $stmt = $pdo->prepare($query);
+  $stmt->execute();
+  $resultA = $stmt->fetchAll();
+  $pdo = null;
+  foreach ($resultA as $A) {
+    var_dump($A);
+  }
+
+
   ?>
   <br><br>
   <div class="container">
@@ -77,22 +89,5 @@ if (count($_SESSION) == 0) {
     </div>
   </div>
 </body>
-
-
-<?php
-if ($_POST['submit'] == 'nouveau') {
-  include 'requetes.php';
-  $name = $_POST['nom'];
-  $pdo = new PDO('sqlite:bdd.sqlite');
-  $query = $requetes[4];
-  $stmt = $pdo->prepare($query);
-  $stmt->bindValue(1, $_POST['sujet'], PDO::PARAM_STR);
-  $stmt->bindValue(2, date('Y-m-d H:i:s'), PDO::PARAM_STR);
-  $stmt->bindValue(3, $_SESSION['newsession'], PDO::PARAM_STR);
-  $stmt->execute();
-  $pdo = null;
-  header("Refresh:1");
-}
-?>
 
 </html>
