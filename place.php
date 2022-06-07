@@ -53,8 +53,7 @@ if (count($_SESSION) == 0) {
         document.write('<svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" class="SVGgrid" width="700px">');
         for (var i = 0; i < 16; i++) {
           for (var j = 0; j < 16; j++) {
-            document.write(`<rect x="${j*1.01}" y="${i*1.01}" width="1" height="1" fill="${pixels[i][j]}" onclick="recup(${j},${i})"/>`);
-          }
+            document.write(`<rect x="${j*1.01}" y="${i*1.01}" width="1" height="1" fill="${pixels[i][j]}" onclick="recup(${j},${i})" ondblclick="valider()"/>`);          }
         }
         console.log(pixels);
         document.write('</svg>');
@@ -65,10 +64,10 @@ if (count($_SESSION) == 0) {
     <br><br>
 
     <div class="Right">
-      <form method='post'>
-        <input type="text" id="x" name="x" placeholder="x">
-        <input type="text" id="y" name="y" placeholder="y">
-        <input type="color" id="head" name="head" value="#e66465">
+      <form id="formulaire" name="formulaire" method='post'>
+        <input type="text" id="x" name="x" placeholder="Colonne">
+        <input type="text" id="y" name="y" placeholder="Ligne">
+        <input type="color" id="head" name="head">
         <br><br>
         <input type="submit" name="submit" value="Valider" class="button">
       </form>

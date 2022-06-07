@@ -21,4 +21,5 @@
   }
   $database=NULL;
   echo "Base de donnée initialisée.";
+  header('Location: index.php');
 ?>
