@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
       $stmt = $pdo->prepare($query);
       $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
       $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-      $stmt->bindValue(3, microtime(true)-60, PDO::PARAM_STR);
+      $stmt->bindValue(3, microtime(true) - 60, PDO::PARAM_STR);
       $stmt->execute();
       $pdo = null;
       echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>';
@@ -74,10 +74,12 @@ if (isset($_POST['submit'])) {
       echo "<h3>Mauvais identifiant</h3>";
     }
   }
-} else {}
+} else {
+}
 
-function checkName($name){
-  if ($name == str_replace(' ', '', $name)){
+function checkName($name)
+{
+  if ($name == str_replace(' ', '', $name)) {
     include 'requetes.php';
     $pdo = new PDO('sqlite:bdd.sqlite');
     $query = $requetes[2];

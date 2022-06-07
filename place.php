@@ -8,26 +8,28 @@ if (count($_SESSION) == 0) {
 <!DOCTYPE html>
 
 <html>
+
 <head>
   <link rel="stylesheet" type="text/css" href="stylePlace.css">
 </head>
 
 <body>
-<?php
+  <?php
 
-//include "functions.php";
-function getTime($id) {
-  include 'requetes.php';
-  $pdo = new PDO('sqlite:bdd.sqlite');
-  $query = $requetes[6];
-  $stmt = $pdo->prepare($query);
-  $stmt->bindValue(1, $id, PDO::PARAM_INT);
-  $stmt->execute();
-  $resultD = $stmt->fetchAll();
-  $pdo = null;
-  return $resultD[0]['heure_dernier_pixel'];
-}
-?>
+  //include "functions.php";
+  function getTime($id)
+  {
+    include 'requetes.php';
+    $pdo = new PDO('sqlite:bdd.sqlite');
+    $query = $requetes[6];
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(1, $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $resultD = $stmt->fetchAll();
+    $pdo = null;
+    return $resultD[0]['heure_dernier_pixel'];
+  }
+  ?>
 
   <?php
 
@@ -68,7 +70,8 @@ function getTime($id) {
         document.write('<svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" class="SVGgrid" width="700px">');
         for (var i = 0; i < 16; i++) {
           for (var j = 0; j < 16; j++) {
-            document.write(`<rect x="${j}" y="${i}" width="1" height="1" fill="${pixels[i][j]}" id="${j}-${i}" onclick="recup(${j},${i})"/>`);          }
+            document.write(`<rect x="${j}" y="${i}" width="1" height="1" fill="${pixels[i][j]}" id="${j}-${i}" onclick="recup(${j},${i})"/>`);
+          }
         }
         evenements();
         document.write('</svg>');
@@ -82,7 +85,7 @@ function getTime($id) {
       <form id="formulaire" name="formulaire" method='post'>
         <input type="text" id="x" name="x" placeholder="Colonne">
         <input type="text" id="y" name="y" placeholder="Ligne">
-        <input type="color" id="head" name="head" value= <?php echo $_SESSION['color'];?>>
+        <input type="color" id="head" name="head" value=<?php echo $_SESSION['color']; ?>>
         <br><br>
         <input type="submit" name="btnSubmit" value="Valider" class="button">
       </form>
@@ -90,40 +93,40 @@ function getTime($id) {
       <?php
 
 
-if (isset($_POST["x"])) {
-      $_SESSION['color'] = $_POST['head'];
-  if (microtime(true) - getTime($_SESSION['session']) > 60 or $_SESSION['session'] == 1) {
-      $UCouleur = $_POST["head"];
-      $Ux = $_POST["y"];
-      $Uy = $_POST["x"];
-      $Uid = $_SESSION['session'];
-      include 'requetes.php';
-      $pdo = new PDO('sqlite:bdd.sqlite');
-      $query = $requetes[4];
-      $stmt = $pdo->prepare($query);
-      $stmt->bindValue(1, $UCouleur, PDO::PARAM_STR);
-      $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
-      $stmt->bindValue(3, $Ux, PDO::PARAM_STR);
-      $stmt->bindValue(4, $Uy, PDO::PARAM_STR);
-      $stmt->execute();
-      $pdo = null;
+      if (isset($_POST["x"])) {
+        $_SESSION['color'] = $_POST['head'];
+        if (microtime(true) - getTime($_SESSION['session']) > 60 or $_SESSION['session'] == 1) {
+          $UCouleur = $_POST["head"];
+          $Ux = $_POST["y"];
+          $Uy = $_POST["x"];
+          $Uid = $_SESSION['session'];
+          include 'requetes.php';
+          $pdo = new PDO('sqlite:bdd.sqlite');
+          $query = $requetes[4];
+          $stmt = $pdo->prepare($query);
+          $stmt->bindValue(1, $UCouleur, PDO::PARAM_STR);
+          $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
+          $stmt->bindValue(3, $Ux, PDO::PARAM_STR);
+          $stmt->bindValue(4, $Uy, PDO::PARAM_STR);
+          $stmt->execute();
+          $pdo = null;
 
-      $pdo = new PDO('sqlite:bdd.sqlite');
-      $query = $requetes[5];
-      $stmt = $pdo->prepare($query);
-      $stmt->bindValue(1, microtime(true), PDO::PARAM_STR);
-      $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
-      $stmt->execute();
-      $pdo = null;
+          $pdo = new PDO('sqlite:bdd.sqlite');
+          $query = $requetes[5];
+          $stmt = $pdo->prepare($query);
+          $stmt->bindValue(1, microtime(true), PDO::PARAM_STR);
+          $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
+          $stmt->execute();
+          $pdo = null;
 
-      header("Refresh:0");
-    } else {
-      echo "Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes";
-    }
-  }
-       ?>
+          header("Refresh:0");
+        } else {
+          echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
+        }
+      }
+      ?>
 
-<br><br>
+      <br><br>
 
       <form method='post'>
         <input type="submit" name="deco" value="Déconnexion" class="button">
@@ -136,8 +139,8 @@ if (isset($_POST["x"])) {
           #unset($_SESSION);
           session_destroy();
           header('Location: index.php');
+        }
       }
-    }
       ?>
     </div>
   </div>
