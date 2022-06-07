@@ -49,6 +49,7 @@ if (isset($_POST['submit'])) {
       session_start();
       $_SESSION["session"] = $result[0]['identifiant_utilisateur'];
       $_SESSION['username'] = $_POST['username'];
+      $_SESSION['color'] = 'black';
       header('Location: place.php');
     } else {
       echo "<h3>Identifiant ou mot de passe incorrecte<h3>";
@@ -65,7 +66,7 @@ if (isset($_POST['submit'])) {
       $stmt = $pdo->prepare($query);
       $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
       $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-      $stmt->bindValue(3, date('Y-m-d H:i:s'), PDO::PARAM_STR);
+      $stmt->bindValue(3, microtime(true)-60, PDO::PARAM_STR);
       $stmt->execute();
       $pdo = null;
       echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>';
