@@ -7,7 +7,9 @@
 </head>
 
 <body>
-
+<!-- 
+  Formulaire de connexion / inscription 
+-->
   <div class="container">
     <div class="tl"></div>
     <div class="tm"></div>
@@ -32,7 +34,11 @@
 
 <?php
 
-/*----------------------------*/
+/*
+  Si le formulaire de connexion est rempli, on vérifie que les informations sont correctes.
+  Si elles sont correctes, on crée une session et on redirige vers la page d'accueil.
+  Si elles sont incorrectes, on affiche un message d'erreur.
+*/
 if (isset($_POST['submit'])) {
   if ($_POST['submit'] == 'Connexion') {
     include 'requetes.php';
@@ -56,6 +62,12 @@ if (isset($_POST['submit'])) {
     }
   }
 
+  /*
+  Si le formulaire d'inscription est rempli, on vérifie que les informations sont correctes avec checkName().
+  Si elles sont correctes, on crée l'utilisateur et on affiche un message de confirmation.
+  Si elles sont incorrectes, on affiche un message d'erreur.
+*/
+
   if ($_POST['submit'] == 'Inscription') {
     $name = $_POST['username'];
     if (checkName($name)) {
@@ -78,6 +90,11 @@ if (isset($_POST['submit'])) {
 }
 
 function checkName($name)
+/*
+  Vérifie que le nom d'utilisateur est correct.
+  Le nom d'utilisateur ne doit contenir d'espaces.
+  Le nonm d'utilisateur doit être unique.
+*/
 {
   if ($name == str_replace(' ', '', $name)) {
     include 'requetes.php';
