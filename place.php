@@ -25,7 +25,6 @@ if (count($_SESSION) == 0) {
   /*
     Fonction qui retourne l'heure de la derniere modification, en secondes UNIX.
   */
-
   {
     include 'requetes.php';
     $pdo = new PDO('sqlite:bdd.sqlite');
@@ -59,7 +58,6 @@ if (count($_SESSION) == 0) {
  Cration d'un tableau vide (16*16) qui contiendra les pixels
 */
   $pixels = [];
-
   for ($i = 0; $i < 16; $i++) {
     array_push($pixels, []);
     for ($j = 0; $j < 16; $j++) {
@@ -116,6 +114,7 @@ if (count($_SESSION) == 0) {
         <input type="submit" name="btnSubmit" value="Valider" class="button">
       </form>
 
+      <a id="timer"></a>
       <?php
 
 
@@ -169,11 +168,11 @@ if (count($_SESSION) == 0) {
 
 
       if (isset($_POST['deco'])) 
-          /*
-            Si le bouton Deconnexion est cliqué :
-             - On supprime la session de l'utilisateur.
-             - On redirige l'utilisateur vers la page d'accueil.
-          */
+      /*
+        Si le bouton Deconnexion est cliqué :
+         - On supprime la session de l'utilisateur.
+         - On redirige l'utilisateur vers la page d'accueil.
+      */
       {
         if ($_POST['deco'] == "Déconnexion") {
           #unset($_SESSION);
