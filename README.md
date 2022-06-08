@@ -29,6 +29,16 @@ Reproduction d'un [r/place](https://www.reddit.com/r/place/) simplifie, en php e
 ## Fonctionnement
 
 Il y a deux pages principales : la page d'accueil et la page d'actions.
+La page d'accueil est accessible depuis l'URL `http://localhost/SAE23/index.php`. Elle permet de se connecter ou de s'inscrire.
+La page d'actions est accessible depuis l'URL `http://localhost/SAE23/place.php`. Elle d'afficher le canevas et permet de choisir un pixel.
+
+Base de donnée SQLite :
+Il y a deux tables : `utilisateurs` et `pixels`.
+ - `utilisateurs` :
+   - `id` : identifiant de l'utilisateur
+ - `pixels` :
+   - `x`
+
 
 ### Init.php
 
@@ -46,8 +56,6 @@ Page principale, affichage et modification de la grille.
 
 Avec php7.4 d'installer et sqlite3/php7.4-sqlite3
 Dans le répertoire, `php -S localhost:5000`
-
-Il y a deux pages principales : la page d'accueil et la page d'actions. 
 
 
 ---
