@@ -23,17 +23,15 @@ function valider(){
 //Couleurs par défaut ?
 //let colors = ["#FFFFFF", "#E4E4E4", "#888888", "#222222", "#FFA7D1", "#E50000", "#E59500", "#A06A42", "#E5D900", "#94E044", "#02BE01", "#00D3DD", "#0083C7", "#0000EA", "#CF6EE4", "#820080"];
 
-function timer(timeLeftInSeconds) {
-  let timeLeft = timeLeftInSeconds;
+
+function timer(timeLeft) {
   let timer = document.getElementById("timer");
-  let interval = setInterval(function() {
-    timeLeft--;
-    timer.innerHTML = timeLeft;
-    if (timeLeft <= 0) {
-      clearInterval(interval);
-      document.forms["formulaire"].submit();
-    }
-  }, 1000);
+  timer.innerHTML = timeLeft;
+  if (timeLeft > 0) {
+    setTimeout(function() {
+      timer(timeLeft - 1);
+    }, 1000);
+  }
 }
 
 timer(10);

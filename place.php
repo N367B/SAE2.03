@@ -1,3 +1,5 @@
+<h1 id='timer'></h1>
+
 <?php
 /*
   Lancement de la session.
@@ -104,6 +106,7 @@ if (count($_SESSION) == 0) {
     </div>
 
     <br><br>
+
     <!--Formulaire-->
     <div class="Right">
       <form id="formulaire" name="formulaire" method='post'>
@@ -114,10 +117,8 @@ if (count($_SESSION) == 0) {
         <input type="submit" name="btnSubmit" value="Valider" class="button">
       </form>
 
-      <h2 id="timer"></h2>
-      <?php
 
-
+<?php
       if (isset($_POST["x"])) 
       /*
         Si le bouton Valider est cliqué :

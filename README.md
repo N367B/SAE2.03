@@ -29,12 +29,15 @@ Reproduction d'un [r/place](https://www.reddit.com/r/place/) simplifie, en php e
 ## Fonctionnement
 
 Il y a deux pages principales : la page d'accueil et la page d'actions.
+
 ### Init.php
 
 Page permettant d'initialiser la base de données, et de supprimer l'existante
+
 ### Index.php
 
 Page de connexion et d'inscription, avec un formulaire de connexion et un formulaire d'inscription.
+
 ### Place.php
 
 Page principale, affichage et modification de la grille.
