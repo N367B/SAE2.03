@@ -27,11 +27,14 @@ function valider(){
 function timer(timeLeft) {
   let timer = document.getElementById("timer");
   timer.innerHTML = timeLeft;
-  if (timeLeft > 0) {
+  /*if (timeLeft > 0) {
     setTimeout(function() {
       timer(timeLeft - 1);
     }, 1000);
-  }
+  }*/
 }
 
-timer(10);
+while (timeLeft > 0) {
+  timer(10);
+  timeLeft--;
+}
