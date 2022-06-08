@@ -114,7 +114,7 @@ if (count($_SESSION) == 0) {
         <input type="submit" name="btnSubmit" value="Valider" class="button">
       </form>
 
-      <a id="timer"></a>
+      <h2 id="timer"></h2>
       <?php
 
 
