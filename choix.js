@@ -33,8 +33,9 @@ function timer(timeLeft) {
     }, 1000);
   }*/
 }
+let timeLeft = 10;
 
 while (timeLeft > 0) {
-  timer(10);
+  timer(timeLeft);
   timeLeft--;
 }
