@@ -1,41 +1,32 @@
-function evenements() {
-  let t = document.getElementsByTagName("rect");
+function evenements()
+/*
+  Fonction qui gère les évènements, EventListener, pour le double clique.
+*/
+{
+  let t = document.getElementsByTagName("rect"); // Récupération des rectangles.
   for (var i = 0; i < t.length; i++) {
-    t[i].addEventListener('dblclick',valider);
+    t[i].addEventListener('dblclick',valider); // Ajout d'un évènement double clique.
   }
 }
 
-function recup(x,y) {
-  let t = document.getElementsByTagName("rect");
+function recup(x,y) 
+/*
+  Fonction qui récupère les coordonnées du rectangle cliqué.
+  Les entres dans le formulaire.
+*/
+{
+  let t = document.getElementsByTagName("rect"); // Récupération des rectangles.
   for (var i = 0; i < t.length; i++) {
-    t[i].setAttribute("style","")
+    t[i].setAttribute("style","") // Suppression du style.
   }
-  document.getElementById(x.toString()+"-"+y.toString()).setAttribute("style","stroke:black; stroke-width:0.1px");
-  document.getElementById("x").value=x;
-  document.getElementById("y").value=y;
+  document.getElementById(x.toString()+"-"+y.toString()).setAttribute("style","stroke:black; stroke-width:0.1px"); // Ajout de la bordure.
+  document.getElementById("x").value=x; // Ajout des coordonnées dans le formulaire.
+  document.getElementById("y").value=y; // Ajout des coordonnées dans le formulaire.
 }
 
-function valider(){
+function valider()
+// Fonction qui valide le choix du joueur.
+{
   document.forms["formulaire"].submit();
 }
 
-
-//Couleurs par défaut ?
-//let colors = ["#FFFFFF", "#E4E4E4", "#888888", "#222222", "#FFA7D1", "#E50000", "#E59500", "#A06A42", "#E5D900", "#94E044", "#02BE01", "#00D3DD", "#0083C7", "#0000EA", "#CF6EE4", "#820080"];
-
-
-function timer(timeLeft) {
-  let timer = document.getElementById("timer");
-  timer.innerHTML = timeLeft;
-  /*if (timeLeft > 0) {
-    setTimeout(function() {
-      timer(timeLeft - 1);
-    }, 1000);
-  }*/
-}
-let timeLeft = 10;
-
-while (timeLeft > 0) {
-  timer(timeLeft);
-  timeLeft--;
-}

@@ -1,5 +1,3 @@
-<h1 id='timer'></h1>
-
 <?php
 /*
   Lancement de la session.
@@ -8,24 +6,25 @@
 */
 session_start();
 if (count($_SESSION) == 0) {
-  header('Location: index.php');
+  header('Location: index.php'); // Redirection vers la page de connexion.
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="stylePlace.css">
+  <link rel="stylesheet" type="text/css" href="stylePlace.css"> <!-- Appel du fichier de style -->
 </head>
 
 <body>
+
   <?php
 
   function getTime($id)
   /*
-    Fonction qui retourne l'heure de la derniere modification, en secondes UNIX.
+    Fonction qui retourne l'heure de la derniere modification d'un utilisateur (id), en secondes UNIX.
   */
   {
     include 'requetes.php';
@@ -41,9 +40,7 @@ if (count($_SESSION) == 0) {
   ?>
 
   <?php
-  /* Message d'accueil */
-  echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>';
-  
+  echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>'; //Message d'accueil
 
   /*
     Recuperation de la table Pixel.
@@ -61,9 +58,9 @@ if (count($_SESSION) == 0) {
 */
   $pixels = [];
   for ($i = 0; $i < 16; $i++) {
-    array_push($pixels, []);
+    array_push($pixels, []); // Creation d'un tableau de 16 lignes
     for ($j = 0; $j < 16; $j++) {
-      array_push($pixels[$i], '');
+      array_push($pixels[$i], ''); // Creation d'un tableau de 16 colonnes
     }
   }
 
@@ -72,10 +69,10 @@ if (count($_SESSION) == 0) {
     Mise en forme du tableau de pixels.
   */
   for ($i = 0; $i < count($resultP); $i++) {
-    $pixels[$resultP[$i][0]][$resultP[$i][1]] = $resultP[$i][3];
+    $pixels[$resultP[$i][0]][$resultP[$i][1]] = $resultP[$i][3]; // On met les pixels dans le tableau
   }
   ?>
-
+  
   <script src="choix.js"></script>
 
   <br><br>
@@ -85,22 +82,20 @@ if (count($_SESSION) == 0) {
     <div class="Left">
 
       <script type="text/javascript">        
-        /*
-          Recuperation de la liste des couleurs depuis PHP.
-        */
-        let pixels = <?php echo json_encode($pixels); ?>;
+
+        let pixels = <?php echo json_encode($pixels); ?>; // Recuperation de la liste des couleurs depuis PHP.
 
         /*
-          Affichage du tableau de pixels, en focntion des couleurs/coordonnees.
+          Affichage du tableau de pixels, en fonction des couleurs/coordonnees.
         */
-        document.write('<svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" class="SVGgrid" width="700px">');
+        document.write('<svg viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg" class="SVGgrid" width="700px">'); // Creation du SVG
         for (var i = 0; i < 16; i++) {
           for (var j = 0; j < 16; j++) {
-            document.write(`<rect x="${j}" y="${i}" width="1" height="1" fill="${pixels[i][j]}" id="${j}-${i}" onclick="recup(${j},${i})"/>`);
+            document.write(`<rect x="${j}" y="${i}" width="1" height="1" fill="${pixels[i][j]}" id="${j}-${i}" onclick="recup(${j},${i})"/>`); // Creation des rectangles (pixels) et attribution des couleurs en fonction des coordonnees
           }
         }
-        evenements();
-        document.write('</svg>');
+        evenements(); // Ajout des evenements
+        document.write('</svg>'); // Fin du SVG
       </script>
 
     </div>
@@ -109,12 +104,12 @@ if (count($_SESSION) == 0) {
 
     <!--Formulaire-->
     <div class="Right">
-      <form id="formulaire" name="formulaire" method='post'>
-        <input type="text" id="x" name="x" placeholder="Colonne">
-        <input type="text" id="y" name="y" placeholder="Ligne">
-        <input type="color" id="head" name="head" value=<?php echo $_SESSION['color']; ?>>
+      <form id="formulaire" name="formulaire" method='post'> <!-- Creation du formulaire -->
+        <input type="text" id="x" name="x" placeholder="Colonne"> <!-- Creation du champ de saisie de la colonne -->
+        <input type="text" id="y" name="y" placeholder="Ligne"> <!-- Creation du champ de saisie de la ligne -->
+        <input type="color" id="head" name="head" value=<?php echo $_SESSION['color']; ?>> <!-- Creation du champ de saisie de la couleur -->
         <br><br>
-        <input type="submit" name="btnSubmit" value="Valider" class="button">
+        <input type="submit" name="btnSubmit" value="Valider" class="button" id='ValidPixel'> <!-- Creation du bouton de validation -->
       </form>
 
 
@@ -123,19 +118,22 @@ if (count($_SESSION) == 0) {
       /*
         Si le bouton Valider est cliqué :
          - Verification de l'heure de la derniere modification (difference en secondes entre l'heure derniere modification et l'heure actuelle superieure a 60 secondes) ou que l'utilisateur est un Admin (id = 1).
-          - Si c'est le cas, on modifie le pixel dans la base de donnees, et rafraichissement de la page.
+          - Si c'est le cas, on modifie le pixel dans la base de donnees et la date de derniere modification, et rafraichissement de la page.
           - Si c'est pas le cas, on affiche un message d'erreur indiquant le temps restant avant la modification.
       */
       {
         $_SESSION['color'] = $_POST['head'];
-        if (microtime(true) - getTime($_SESSION['session']) > 60 or $_SESSION['session'] == 1) {
-          $UCouleur = $_POST["head"];
-          $Ux = $_POST["y"];
-          $Uy = $_POST["x"];
-          $Uid = $_SESSION['session'];
+        if (microtime(true) - getTime($_SESSION['session']) > 60 or $_SESSION['session'] == 1) // Verification de l'heure de la derniere modification
+        {
+          $UCouleur = $_POST["head"]; // Recuperation de la couleur
+          $Ux = $_POST["y"]; // Recuperation de la ligne
+          $Uy = $_POST["x"]; // Recuperation de la colonne
+          $Uid = $_SESSION['session']; // Recuperation de l'id de l'utilisateur
+          
           include 'requetes.php';
+          
           $pdo = new PDO('sqlite:bdd.sqlite');
-          $query = $requetes[4];
+          $query = $requetes[4]; // Requete de modification du pixel
           $stmt = $pdo->prepare($query);
           $stmt->bindValue(1, $UCouleur, PDO::PARAM_STR);
           $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
@@ -145,7 +143,7 @@ if (count($_SESSION) == 0) {
           $pdo = null;
 
           $pdo = new PDO('sqlite:bdd.sqlite');
-          $query = $requetes[5];
+          $query = $requetes[5]; // Requete de modification de la date de derniere modification
           $stmt = $pdo->prepare($query);
           $stmt->bindValue(1, microtime(true), PDO::PARAM_STR);
           $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
@@ -154,7 +152,15 @@ if (count($_SESSION) == 0) {
 
           header("Refresh:0");
         } else {
-          echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
+          /*
+            Affichage du compteur de temps restant avant la modification.
+          */
+          echo '<p id=\'countdown\'></p>';
+          echo '<script>var timeleft =' . round(60 - (microtime(true) - getTime($_SESSION['session']))) . ';';
+          echo 'document.getElementById("ValidPixel").style.backgroundColor = "red";document.getElementById("ValidPixel").disabled = true;';
+          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.backgroundColor = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
+          echo ' </script>';
+          //echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
         }
       }
       ?>
@@ -162,7 +168,7 @@ if (count($_SESSION) == 0) {
       <br><br>
       <!--Formulaire-->
       <form method='post'>
-        <input type="submit" name="deco" value="Déconnexion" class="button">
+        <input type="submit" name="deco" value="Déconnexion" class="button"> <!-- Creation du bouton de deconnexion -->
       </form>
 
       <?php
@@ -177,13 +183,14 @@ if (count($_SESSION) == 0) {
       {
         if ($_POST['deco'] == "Déconnexion") {
           #unset($_SESSION);
-          session_destroy();
-          header('Location: index.php');
+          session_destroy(); // Suppression de la session
+          header('Location: index.php'); // Redirection vers la page d'accueil
         }
       }
       ?>
     </div>
   </div>
+
 </body>
 
 </html>
