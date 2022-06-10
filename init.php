@@ -11,12 +11,14 @@
       <form method="get">
         <input type="text" name="validation" placeholder="oui/non">
         <br><br>
-        <input type="submit" name="submit" value="valider" class="button">
+        <input type="submit" name="submit" value="Valider" class="button">
       </form>
 
 
 <?php
-if ($_GET["validation"] == "oui") {
+  session_start();
+  echo '<br><br><a href="index.php"><button class="button">Retour à l\'accueil</button></a>';
+  if ($_SESSION['session'] == 1 and $_GET["validation"] == "oui") {
   unlink('bdd.sqlite');
   $database = new PDO('sqlite:bdd.sqlite');
   $database->exec("CREATE TABLE `Pixel` ( `coordonne_x` INTEGER, `coordonne_y` INTEGER, `identifiant_utilisateur` TEXT NOT NULL, `couleur` TEXT, FOREIGN KEY(`identifiant_utilisateur`) REFERENCES `Utilisateur`(`identifiant_utilisateur`), PRIMARY KEY(`coordonne_x`,`coordonne_y`) );");
