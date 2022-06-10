@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="styleIndex.css">
+  <link rel="stylesheet" type="text/css" href="styleIndex.css"> <!-- Appel du fichier de style -->
+  <title>Accueil</title>
 </head>
 
 <body>
@@ -16,8 +17,8 @@
     <div class="ml"></div>
     <div class="mm">
       <form method="post">
-        <input type="text" name="username" placeholder="nom"> <!-- Saisir nom d'utilisateur -->
-        <input type="password" name="password" placeholder="mot de passe" id='password'> <!-- Saisir mot de passe -->
+        <input type="text" name="username" placeholder="Nom"> <!-- Saisir nom d'utilisateur -->
+        <input type="password" name="password" placeholder="Mot de passe" id='password'> <!-- Saisir mot de passe -->
         <a href='#' onclick="toggleViewPassword()">
           <!-- Afficher/masquer mot de passe -->
           <img src="hide.png" alt="ShowHideIcon" id="HideShow" height="25px"> <!-- Icone de masquage/affichage du mot de passe -->
@@ -27,7 +28,7 @@
         <input type="submit" name="submit" value="Inscription" class="button"> <!-- Bouton d'inscription -->
       </form>
       <br><br>
-      <a href="stats.php"><button class="button">Statistiques</button></a>
+      <a href="stats.php"><button class="button">Statistiques</button></a> <!-- Bouton statistiques-->
     </div>
     <div class="mr"></div>
     <div class="bl"></div>
@@ -71,15 +72,15 @@ if (isset($_SESSION))
 if (isset($_POST['submit'])) {
   if ($_POST['submit'] == 'Connexion') {
     include 'requetes.php';
-    $name = $_POST['username'];
-    $pdo = new PDO('sqlite:bdd.sqlite');
+    $name = $_POST['username']; // Recuperation du nom d'utilisateur
+    $pdo = new PDO('sqlite:bdd.sqlite'); // Connexion à la base de données
     $query = $requetes[0]; // Recuperation de la requete de recherche d'un utilisateur
-    $stmt = $pdo->prepare($query);
-    $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
-    $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    $pdo = null;
+    $stmt = $pdo->prepare($query); // Preparation de la requete
+    $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR); // Bind du nom d'utilisateur
+    $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR); // Bind du mot de passe
+    $stmt->execute(); // Execution de la requete
+    $result = $stmt->fetchAll(); // Recuperation du resultat de la requete
+    $pdo = null; // Fermeture de la connexion à la base de données
     if (isset($result[0][1])) {
       session_start(); // Creation de la session
       $_SESSION["session"] = $result[0]['identifiant_utilisateur']; // Attribution de l'identifiant de l'utilisateur a la session
@@ -99,20 +100,19 @@ if (isset($_POST['submit'])) {
   if ($_POST['submit'] == 'Inscription') {
     $name = $_POST['username'];
     if (checkName($name)) {
-      #if ()
       include 'requetes.php';
       $pdo = new PDO('sqlite:bdd.sqlite');
       $query = $requetes[1]; // Requete d'insertion d'un utilisateur
       $stmt = $pdo->prepare($query);
-      $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
-      $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
-      $stmt->bindValue(3, microtime(true) - 60, PDO::PARAM_STR);
-      $stmt->bindValue(4, 0, PDO::PARAM_INT);
+      $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR); // Attribution du nom d'utilisateur
+      $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR); // Attribution du mot de passe
+      $stmt->bindValue(3, microtime(true) - 60, PDO::PARAM_STR); // Attribution de la date dernier pixel - 60 secondes
+      $stmt->bindValue(4, 0, PDO::PARAM_INT); // Attribution du nombre de pixels a 0
       $stmt->execute();
       $pdo = null;
-      echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>';
+      echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>'; // Affichage du message de confirmation
     } else {
-      echo "<h3>Mauvais identifiant</h3>";
+      echo "<h3>Mauvais identifiant</h3>"; // Affichage du message d'erreur
     }
   }
 } else {
@@ -121,26 +121,26 @@ if (isset($_POST['submit'])) {
 function checkName($name)
 /*
   Vérifie que le nom d'utilisateur est correct.
-  Le nom d'utilisateur ne doit contenir d'espaces.
-  Le nonm d'utilisateur doit être unique.
+  Le nom d'utilisateur ne doit pas contenir d'espaces.
+  Le nom d'utilisateur doit être unique.
 */
 {
   if ($name == str_replace(' ', '', $name)) {
     include 'requetes.php';
     $pdo = new PDO('sqlite:bdd.sqlite');
-    $query = $requetes[2]; // Requete de recherche des utilisateurs
+    $query = $requetes[2]; // Requête de recherche des utilisateurs
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $resultA = $stmt->fetchAll();
     $pdo = null;
     foreach ($resultA as $A) {
       if ($A[1] == $name) {
-        return False;
+        return False; // Si le nom d'utilisateur existe déjà, on retourne false
       }
     }
-    return True;
+    return True; // Si le nom d'utilisateur n'existe pas, on retourne true
   } else {
-    return False;
+    return False; // Si le nom d'utilisateur contient des espaces, on retourne false
   }
 }
 

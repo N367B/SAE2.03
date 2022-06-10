@@ -1,10 +1,12 @@
-
 <!DOCTYPE html>
+
 <html>
+
 <?php
+
 /*
-  Liste des requetes SQL.
-*/
+  Liste des requêtes SQL.
+  */
 $requetes = [
   "SELECT * FROM Utilisateur WHERE nom_utilisateur=? AND mot_de_passe=?;", // Recherche d'un utilisateur en fonction de son nom et de son mot de passe.
   "INSERT INTO Utilisateur(nom_utilisateur, mot_de_passe, heure_dernier_pixel, nb_pixels_poses) VALUES (?,?,?,?);", // Inscription d'un utilisateur.

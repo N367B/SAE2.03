@@ -1,27 +1,32 @@
 body {
-    background-color: lightblue;
-    color: grey;
-    font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(rgb(195, 191, 255), rgb(123, 137, 255));
+  background-size: 100%;
+  background-repeat: repeat-y;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  color: grey;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 table {
+  text-align: center;
   font-size: 20px;
-  width: 100%;
+  width: 80%;
   background-color: #555;
   color: aliceblue;
 }
 
 a {
-  color: aliceblue
+  color: aliceblue;
 }
 h3 {
   background-color: black;
   color: aliceblue;
 }
 
-
-
-.container {  display: grid;
+.container {
+  display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 10px 10px;
@@ -32,30 +37,48 @@ h3 {
     "bl bm br";
 }
 
-.tl { grid-area: tl; }
-
-.tm { grid-area: tm; }
-.tm { grid-area: tm; }
-
-.tr { grid-area: tr; }
-
-.ml { grid-area: ml; }
-
-.mm { grid-area: mm;
-    padding: 10px;
-    background-color: grey;
-    text-align: center;
-    vertical-align: middle;
+.tl {
+  grid-area: tl;
 }
 
-.mr { grid-area: mr; }
+.tm {
+  grid-area: tm;
+}
+.tm {
+  grid-area: tm;
+}
 
-.bl { grid-area: bl; }
+.tr {
+  grid-area: tr;
+}
 
-.bm { grid-area: bm; }
+.ml {
+  grid-area: ml;
+}
 
-.br { grid-area: br; }
+.mm {
+  grid-area: mm;
+  padding: 10px;
+  background-color: grey;
+  text-align: center;
+  vertical-align: middle;
+}
 
+.mr {
+  grid-area: mr;
+}
+
+.bl {
+  grid-area: bl;
+}
+
+.bm {
+  grid-area: bm;
+}
+
+.br {
+  grid-area: br;
+}
 
 .button {
   background-color: black;
@@ -68,7 +91,24 @@ h3 {
   font-size: 16px;
 }
 .button:hover {
-    cursor: pointer;
+  cursor: pointer;
   background-color: #555;
   color: black;
+}
+
+img {
+  position: relative;
+  top: 7px;
+  left: 3px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  margin: 1%;
+}
+
+td {
+  padding: 10px;
 }

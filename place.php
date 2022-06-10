@@ -16,6 +16,7 @@ if (count($_SESSION) == 0) {
 
 <head>
   <link rel="stylesheet" type="text/css" href="stylePlace.css"> <!-- Appel du fichier de style -->
+  <title>Place</title>
 </head>
 
 <body>
@@ -40,20 +41,19 @@ if (count($_SESSION) == 0) {
   ?>
 
   <?php
-  function GoToNow($url)
-  {
-    echo '<script language="javascript">window.location.href ="' . $url . '"</script>';
-  }
 
 
-  echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>'; //Message d'accueil
+  $jour = getdate(); // Recuperation de la date
+  $semaine = array(" Dimanche ", " Lundi ", " Mardi ", " Mercredi ", " Jeudi ", " vendredi ", " samedi "); // Tableau des jours de la semaine
+  $mois = array(1 => " janvier ", " février ", " mars ", " avril ", " mai ", " juin ", " juillet ", " août ", " septembre ", " octobre ", " novembre ", " décembre "); // Tableau des mois
+  echo '<marquee direction="right">' . "Il est " . date('H:i') . "　　　|　　　 Vous êtes connecté en tant que <strong>" . $_SESSION['username'] . "</strong>　　　|　　　 Aujourd'hui ", $semaine[date('w')], " ", date('j'), "", $mois[date('n')], date('Y'), "" . '</marquee>'; //Message d'accueil
 
   /*
     Recuperation de la table Pixel.
   */
   include 'requetes.php';
   $pdo = new PDO('sqlite:bdd.sqlite');
-  $query = $requetes[3];
+  $query = $requetes[3]; // Recuperation de la liste des pixels.
   $stmt = $pdo->prepare($query);
   $stmt->execute();
   $resultP = $stmt->fetchAll();
@@ -111,8 +111,8 @@ if (count($_SESSION) == 0) {
     <div class="Right">
       <form id="formulaire" name="formulaire" method='post'>
         <!-- Creation du formulaire -->
-        <input type="text" id="x" name="x" placeholder="Colonne"> <!-- Creation du champ de saisie de la colonne -->
-        <input type="text" id="y" name="y" placeholder="Ligne"> <!-- Creation du champ de saisie de la ligne -->
+        <input type="text" id="x" name="x" placeholder="Colonne"> <br><br> <!-- Creation du champ de saisie de la colonne -->
+        <input type="text" id="y" name="y" placeholder="Ligne"> <br><br> <!-- Creation du champ de saisie de la ligne -->
         <input type="color" id="head" name="head" value=<?php echo $_SESSION['color']; ?>> <!-- Creation du champ de saisie de la couleur -->
         <br><br>
         <input type="submit" name="btnSubmit" value="Valider" class="button" id='ValidPixel'> <!-- Creation du bouton de validation -->
@@ -120,6 +120,10 @@ if (count($_SESSION) == 0) {
 
 
       <?php
+      if ($_SESSION['session'] == 1) {
+        echo '<br><br><a href="init.php"><button class="button">Réinitialisation</button></a>';
+      }
+
       $URL = "place.php";
       if (isset($_POST["x"]))
       /*
@@ -141,33 +145,33 @@ if (count($_SESSION) == 0) {
           $pdo = new PDO('sqlite:bdd.sqlite');
           $query = $requetes[4]; // Requete de modification du pixel
           $stmt = $pdo->prepare($query);
-          $stmt->bindValue(1, $UCouleur, PDO::PARAM_STR);
-          $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
-          $stmt->bindValue(3, $Ux, PDO::PARAM_STR);
-          $stmt->bindValue(4, $Uy, PDO::PARAM_STR);
+          $stmt->bindValue(1, $UCouleur, PDO::PARAM_STR); // Attribution de la couleur
+          $stmt->bindValue(2, $Uid, PDO::PARAM_STR); // Attribution de l'id de l'utilisateur
+          $stmt->bindValue(3, $Ux, PDO::PARAM_STR); // Attribution de la ligne
+          $stmt->bindValue(4, $Uy, PDO::PARAM_STR); // Attribution de la colonne
           $stmt->execute();
           $pdo = null;
 
           $pdo = new PDO('sqlite:bdd.sqlite');
           $query = $requetes[5]; // Requete de modification de la date de derniere modification
           $stmt = $pdo->prepare($query);
-          $stmt->bindValue(1, microtime(true), PDO::PARAM_STR);
-          $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
-          $stmt->bindValue(3, $Uid, PDO::PARAM_STR);
+          $stmt->bindValue(1, microtime(true), PDO::PARAM_STR); // Attribution de l'heure actuelle
+          $stmt->bindValue(2, $Uid, PDO::PARAM_STR); // Attribution de l'id de l'utilisateur
+          $stmt->bindValue(3, $Uid, PDO::PARAM_STR); // Attribution de l'id de l'utilisateur
           $stmt->execute();
           $pdo = null;
 
-          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>"; // Rafraichissement de la page
           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
           //header("Refresh:0");
         } else {
           /*
             Affichage du compteur de temps restant avant la modification.
           */
-          echo '<p id=\'countdown\'></p>';
-          echo '<script>var timeleft =' . round(60 - (microtime(true) - getTime($_SESSION['session']))) . ';';
-          echo 'document.getElementById("ValidPixel").style.color = "black";document.getElementById("ValidPixel").disabled = true;';
-          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.color = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
+          echo '<p style="color:black;" id=\'countdown\'></p>';
+          echo '<script>var timeleft =' . round(60 - (microtime(true) - getTime($_SESSION['session']))) . ';'; // Calcul du temps restant avant la modification
+          echo 'document.getElementById("ValidPixel").style.color = "";document.getElementById("ValidPixel").disabled = true;'; // Desactivation du bouton de validation
+          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.color = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes.";}timeleft -= 1;}, 1000);'; // Affichage du compteur
           echo ' </script>';
           //echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
         }
@@ -192,7 +196,7 @@ if (count($_SESSION) == 0) {
         if ($_POST['deco'] == "Déconnexion") {
           session_destroy(); // Suppression de la session
           $URL = 'index.php';
-          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>"; // Redirection vers la page d'accueil
           echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
           //header('Location: index.php'); // Redirection vers la page d'accueil
         }
