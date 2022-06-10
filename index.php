@@ -6,8 +6,8 @@
 </head>
 
 <body>
-<!-- 
-  Formulaire de connexion / inscription 
+<!--
+  Formulaire de connexion / inscription
 -->
   <div class="container">
     <div class="tl"></div>
@@ -24,6 +24,9 @@
         <br><br>
         <input type="submit" name="submit" value="Connexion" class="button"> <!-- Bouton de connexion -->
         <input type="submit" name="submit" value="Inscription" class="button"> <!-- Bouton d'inscription -->
+      </form>
+      <br><br>
+      <a href="stats.php"><button class="button">Statistiques</button></a>
     </div>
     <div class="mr"></div>
     <div class="bl"></div>
@@ -33,14 +36,14 @@
 </body>
 
 <script type="text/javascript">
-  function toggleViewPassword() 
+  function toggleViewPassword()
   /*
     Fonction qui permet de cacher/afficher le mot de passe, et de changer l'icone de l'affichage du mot de passe.
   */
   {
     var x = document.getElementById("password"); // Recuperation du champ de mot de passe
     var y = document.getElementById("HideShow"); // Recuperation de l'icone de masquage/affichage du mot de passe
-    if (x.type === "password") // 
+    if (x.type === "password") //
     {
       x.type = "text"; // Si le mot de passe est caché, on l'affiche
       y.src = "show.png"; // On change l'icone de l'affichage du mot de passe
@@ -99,6 +102,7 @@ if (isset($_POST['submit'])) {
       $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
       $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
       $stmt->bindValue(3, microtime(true) - 60, PDO::PARAM_STR);
+      $stmt->bindValue(4,0, PDO::PARAM_INT);
       $stmt->execute();
       $pdo = null;
       echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>';
