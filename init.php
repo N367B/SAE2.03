@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <link rel="stylesheet" type="text/css" href="styleIndex.css">
-
-</head>
-
-<body>
-  <h2>Voulez vous creer une nouvelle base de données (supprimer l'existante)</h1>
-      <form method="get">
-        <input type="text" name="validation" placeholder="oui/non">
-        <br><br>
-        <input type="submit" name="submit" value="valider" class="button">
-      </form>
-
-
-<?php
-if ($_GET["validation"] == "oui") {
+  <head>
+    <link rel="stylesheet" type="text/css" href="styleIndex.css">
+  </head>
+  <body>
+    <h2>Voulez vous creer une nouvelle base de données (supprimer l'existante)</h1>
+    <form method="get">
+      <input type="text" name="validation" placeholder="oui/non">
+      <br><br>
+      <input type="submit" name="submit" value="valider" class="button">
+    </form>
+  <?php
+  if ($_GET["validation"] == "oui") {
   unlink('bdd.sqlite');
   $database = new PDO('sqlite:bdd.sqlite');
   $database->exec("CREATE TABLE `Pixel` ( `coordonne_x` INTEGER, `coordonne_y` INTEGER, `identifiant_utilisateur` TEXT NOT NULL, `couleur` TEXT, FOREIGN KEY(`identifiant_utilisateur`) REFERENCES `Utilisateur`(`identifiant_utilisateur`), PRIMARY KEY(`coordonne_x`,`coordonne_y`) );");
@@ -42,7 +37,7 @@ if ($_GET["validation"] == "oui") {
   $database=NULL;
   echo "<p>Base de donnée initialisée.</p>";
   echo "<a href=\"index.php\">Retour à l'accueil</a>";
-}
-?>
-</body>
+  }
+  ?>
+  </body>
 </html>

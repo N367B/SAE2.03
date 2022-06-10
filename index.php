@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<!--
+  <!--
   Formulaire de connexion / inscription
 -->
   <div class="container">
@@ -18,7 +18,8 @@
       <form method="post">
         <input type="text" name="username" placeholder="nom"> <!-- Saisir nom d'utilisateur -->
         <input type="password" name="password" placeholder="mot de passe" id='password'> <!-- Saisir mot de passe -->
-        <a href='#' onclick="toggleViewPassword()"> <!-- Afficher/masquer mot de passe -->
+        <a href='#' onclick="toggleViewPassword()">
+          <!-- Afficher/masquer mot de passe -->
           <img src="hide.png" alt="ShowHideIcon" id="HideShow" height="25px"> <!-- Icone de masquage/affichage du mot de passe -->
         </a>
         <br><br>
@@ -59,8 +60,7 @@
 <?php
 
 if (isset($_SESSION))
-/* Destruction de la session si elle existe */
-{
+/* Destruction de la session si elle existe */ {
   session_destroy();
 }
 /*
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
       $stmt->bindValue(1, $_POST['username'], PDO::PARAM_STR);
       $stmt->bindValue(2, md5($_POST['password']), PDO::PARAM_STR);
       $stmt->bindValue(3, microtime(true) - 60, PDO::PARAM_STR);
-      $stmt->bindValue(4,0, PDO::PARAM_INT);
+      $stmt->bindValue(4, 0, PDO::PARAM_INT);
       $stmt->execute();
       $pdo = null;
       echo '<h3>Utilisateur ' . $_POST['username'] . ' créé</h3>';

@@ -40,9 +40,10 @@ if (count($_SESSION) == 0) {
   ?>
 
   <?php
-  function GoToNow ($url){
-    echo '<script language="javascript">window.location.href ="'.$url.'"</script>';
-}
+  function GoToNow($url)
+  {
+    echo '<script language="javascript">window.location.href ="' . $url . '"</script>';
+  }
 
 
   echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>'; //Message d'accueil
@@ -58,7 +59,7 @@ if (count($_SESSION) == 0) {
   $resultP = $stmt->fetchAll();
   $pdo = null;
 
-/*
+  /*
  Cration d'un tableau vide (16*16) qui contiendra les pixels
 */
   $pixels = [];
@@ -87,7 +88,6 @@ if (count($_SESSION) == 0) {
     <div class="Left">
 
       <script type="text/javascript">
-
         let pixels = <?php echo json_encode($pixels); ?>; // Recuperation de la liste des couleurs depuis PHP.
 
         /*
@@ -109,7 +109,8 @@ if (count($_SESSION) == 0) {
 
     <!--Formulaire-->
     <div class="Right">
-      <form id="formulaire" name="formulaire" method='post'> <!-- Creation du formulaire -->
+      <form id="formulaire" name="formulaire" method='post'>
+        <!-- Creation du formulaire -->
         <input type="text" id="x" name="x" placeholder="Colonne"> <!-- Creation du champ de saisie de la colonne -->
         <input type="text" id="y" name="y" placeholder="Ligne"> <!-- Creation du champ de saisie de la ligne -->
         <input type="color" id="head" name="head" value=<?php echo $_SESSION['color']; ?>> <!-- Creation du champ de saisie de la couleur -->
@@ -118,16 +119,15 @@ if (count($_SESSION) == 0) {
       </form>
 
 
-<?php
-      $URL="place.php";
+      <?php
+      $URL = "place.php";
       if (isset($_POST["x"]))
       /*
         Si le bouton Valider est cliqué :
          - Verification de l'heure de la derniere modification (difference en secondes entre l'heure derniere modification et l'heure actuelle superieure a 60 secondes) ou que l'utilisateur est un Admin (id = 1).
           - Si c'est le cas, on modifie le pixel dans la base de donnees et la date de derniere modification, et rafraichissement de la page.
           - Si c'est pas le cas, on affiche un message d'erreur indiquant le temps restant avant la modification.
-      */
-      {
+      */ {
         $_SESSION['color'] = $_POST['head'];
         if (microtime(true) - getTime($_SESSION['session']) > 60 or $_SESSION['session'] == 1) // Verification de l'heure de la derniere modification
         {
@@ -188,8 +188,7 @@ if (count($_SESSION) == 0) {
         Si le bouton Deconnexion est cliqué :
          - On supprime la session de l'utilisateur.
          - On redirige l'utilisateur vers la page d'accueil.
-      */
-      {
+      */ {
         if ($_POST['deco'] == "Déconnexion") {
           session_destroy(); // Suppression de la session
           $URL = 'index.php';
