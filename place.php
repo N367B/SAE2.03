@@ -40,6 +40,11 @@ if (count($_SESSION) == 0) {
   ?>
 
   <?php
+  function GoToNow ($url){
+    echo '<script language="javascript">window.location.href ="'.$url.'"</script>';
+}
+
+
   echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>'; //Message d'accueil
 
   /*
@@ -114,6 +119,11 @@ if (count($_SESSION) == 0) {
 
 
 <?php
+      if ($_SESSION['session'] == 1) {
+        echo '<br><br><a href="init.php"><button class="button">Réinitialiser la grille de pixels</button></a>';
+      }
+
+      $URL="place.php";
       if (isset($_POST["x"]))
       /*
         Si le bouton Valider est cliqué :
@@ -151,15 +161,17 @@ if (count($_SESSION) == 0) {
           $stmt->execute();
           $pdo = null;
 
-          header("Refresh:0");
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+          //header("Refresh:0");
         } else {
           /*
             Affichage du compteur de temps restant avant la modification.
           */
           echo '<p id=\'countdown\'></p>';
           echo '<script>var timeleft =' . round(60 - (microtime(true) - getTime($_SESSION['session']))) . ';';
-          echo 'document.getElementById("ValidPixel").style.backgroundColor = "red";document.getElementById("ValidPixel").disabled = true;';
-          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.backgroundColor = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
+          echo 'document.getElementById("ValidPixel").style.color = "black";document.getElementById("ValidPixel").disabled = true;';
+          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.color = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
           echo ' </script>';
           //echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
         }
@@ -183,9 +195,11 @@ if (count($_SESSION) == 0) {
       */
       {
         if ($_POST['deco'] == "Déconnexion") {
-          #unset($_SESSION);
           session_destroy(); // Suppression de la session
-          header('Location: index.php'); // Redirection vers la page d'accueil
+          $URL = 'index.php';
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+          //header('Location: index.php'); // Redirection vers la page d'accueil
         }
       }
       ?>
