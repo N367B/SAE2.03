@@ -1,7 +1,7 @@
 <?php
 /*
   Lancement de la session.
-  Verification de l'existence de la session. 
+  Verification de l'existence de la session.
   Si elle n'existe pas, on redirige vers la page de connexion.
 */
 session_start();
@@ -10,7 +10,7 @@ if (count($_SESSION) == 0) {
 }
 ?>
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 
 <html>
 
@@ -40,6 +40,11 @@ if (count($_SESSION) == 0) {
   ?>
 
   <?php
+  function GoToNow ($url){
+    echo '<script language="javascript">window.location.href ="'.$url.'"</script>';
+}
+
+
   echo '<h3>' . "Vous êtes connecté en tant que " . $_SESSION['username'] . '</h3>'; //Message d'accueil
 
   /*
@@ -72,7 +77,7 @@ if (count($_SESSION) == 0) {
     $pixels[$resultP[$i][0]][$resultP[$i][1]] = $resultP[$i][3]; // On met les pixels dans le tableau
   }
   ?>
-  
+
   <script src="choix.js"></script>
 
   <br><br>
@@ -81,7 +86,7 @@ if (count($_SESSION) == 0) {
 
     <div class="Left">
 
-      <script type="text/javascript">        
+      <script type="text/javascript">
 
         let pixels = <?php echo json_encode($pixels); ?>; // Recuperation de la liste des couleurs depuis PHP.
 
@@ -114,7 +119,8 @@ if (count($_SESSION) == 0) {
 
 
 <?php
-      if (isset($_POST["x"])) 
+      $URL="place.php";
+      if (isset($_POST["x"]))
       /*
         Si le bouton Valider est cliqué :
          - Verification de l'heure de la derniere modification (difference en secondes entre l'heure derniere modification et l'heure actuelle superieure a 60 secondes) ou que l'utilisateur est un Admin (id = 1).
@@ -129,9 +135,9 @@ if (count($_SESSION) == 0) {
           $Ux = $_POST["y"]; // Recuperation de la ligne
           $Uy = $_POST["x"]; // Recuperation de la colonne
           $Uid = $_SESSION['session']; // Recuperation de l'id de l'utilisateur
-          
+
           include 'requetes.php';
-          
+
           $pdo = new PDO('sqlite:bdd.sqlite');
           $query = $requetes[4]; // Requete de modification du pixel
           $stmt = $pdo->prepare($query);
@@ -147,18 +153,21 @@ if (count($_SESSION) == 0) {
           $stmt = $pdo->prepare($query);
           $stmt->bindValue(1, microtime(true), PDO::PARAM_STR);
           $stmt->bindValue(2, $Uid, PDO::PARAM_STR);
+          $stmt->bindValue(3, $Uid, PDO::PARAM_STR);
           $stmt->execute();
           $pdo = null;
 
-          header("Refresh:0");
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+          //header("Refresh:0");
         } else {
           /*
             Affichage du compteur de temps restant avant la modification.
           */
           echo '<p id=\'countdown\'></p>';
           echo '<script>var timeleft =' . round(60 - (microtime(true) - getTime($_SESSION['session']))) . ';';
-          echo 'document.getElementById("ValidPixel").style.backgroundColor = "red";document.getElementById("ValidPixel").disabled = true;';
-          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.backgroundColor = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
+          echo 'document.getElementById("ValidPixel").style.color = "black";document.getElementById("ValidPixel").disabled = true;';
+          echo 'var timer = setInterval(function(){if(timeleft <= 0){clearInterval(timer);document.getElementById("countdown").innerHTML = "C\'est bon !";document.getElementById("ValidPixel").style.color = "";document.getElementById("ValidPixel").disabled = false;} else {document.getElementById("countdown").innerHTML = \'Il reste \' + timeleft + " secondes";}timeleft -= 1;}, 1000);';
           echo ' </script>';
           //echo "<p>Attendez " . round(60 - (microtime(true) - getTime($_SESSION['session']))) . " secondes</p>";
         }
@@ -174,7 +183,7 @@ if (count($_SESSION) == 0) {
       <?php
 
 
-      if (isset($_POST['deco'])) 
+      if (isset($_POST['deco']))
       /*
         Si le bouton Deconnexion est cliqué :
          - On supprime la session de l'utilisateur.
@@ -182,9 +191,11 @@ if (count($_SESSION) == 0) {
       */
       {
         if ($_POST['deco'] == "Déconnexion") {
-          #unset($_SESSION);
           session_destroy(); // Suppression de la session
-          header('Location: index.php'); // Redirection vers la page d'accueil
+          $URL = 'index.php';
+          echo "<script type='text/javascript'>document.location.href='{$URL}';</script>";
+          echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URL . '">';
+          //header('Location: index.php'); // Redirection vers la page d'accueil
         }
       }
       ?>
