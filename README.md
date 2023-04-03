@@ -9,7 +9,7 @@ Reproduction d'un [r/place](https://www.reddit.com/r/place/) simplifié avec PHP
 *Prérequis :*
 
 - Installer `php7.X`, `sqlite3` et `php7.X-sqlite3`
-  > Avec $X \in \N$ et $X \le 4 $
+  > Avec $X \in N$ et $X \le 4 $
 
 Dans le répertoire où sont stockés les fichiers:
 > `php -S localhost:50000`
